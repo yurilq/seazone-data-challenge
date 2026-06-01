@@ -93,7 +93,37 @@ Projetar viabilidade de um prédio de 50 apartamentos (4 quartos) em Meia Praia 
 
 ---
 
-#### 🛠️ ESCOLHAS DE STACK JUSTIFICADAS
+#### 🔍 PARTE 3: CODE REVIEW & ANÁLISE DE PR (Síntese Map-Reduce)
+
+**Objetivo:** Avaliar o PR `feature-system-price-v2` do desenvolvedor Junior usando metodologia Map-Reduce com 3 modelos de IA.
+
+**Metodologia:**
+- **Modelos Utilizados:** Claude Sonnet 4.5, Claude Opus 4, Minimax 2.5
+- **Abordagem:** Intersecção de falhas (100% consenso), identificação de falsos positivos, foco em custo/performance AWS/GCP
+- **Documentos Gerados:**
+  - `reviews/01-system-price-v2.md` (Entregável executivo)
+  - `ai-sessions/review process/SINTESE-MAP-REDUCE-FINAL.md` (Análise consolidada)
+
+**Veredito:** ❌ **CHANGES REQUESTED (Bloqueio Total)**
+
+**Top 3 Problemas Críticos (Consenso 100% - 3/3 modelos):**
+
+| # | Problema | Impacto | Custo Anual |
+|---|----------|---------|-----------|
+| 1 | **Dupla Data não Tratada** | Pipeline retorna 0 registros → dashboard quebrado | R$ 1.800+ |
+| 2 | **Pipeline Não Idempotente** | Re-runs duplicam dados exponencialmente | R$ 1k-5k |
+| 3 | **Exception Silencioso** | NameError invisível em produção | N/A (operacional) |
+
+**Impacto Financeiro Estimado:** ~R$ 3-6k/ano em AWS Athena/GCP BigQuery
+
+**Falhas Upstream Identificadas:**
+1. **Processo:** Spec não escrito (apenas verbal)
+2. **Técnica:** Falta de onboarding sobre estrutura de dados
+3. **Tooling:** Ausência de pre-commit hooks
+
+**Tempo de Correção:** ~4 horas de desenvolvimento + 2h pair programming
+
+---
 * **uv:** Utilizado para garantir um gerenciamento rápido e determinístico de dependências, substituindo o uso de `requirements.txt` solto.
 * **DuckDB:** Escolhido como engine SQL local simulando perfeitamente a arquitetura, os custos e a modelagem do AWS Athena / GCP BigQuery em produção.
 * **Polars:** Adotado para a análise exploratória (wrangling), garantindo performance superior ao Pandas e evitando vazamento de memória.
